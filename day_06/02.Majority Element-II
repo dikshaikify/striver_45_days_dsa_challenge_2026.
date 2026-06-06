@@ -1,0 +1,38 @@
+class Solution {
+    public List<Integer> majorityElementTwo(int[] nums) {
+        int n = nums.length;
+        int majorityElement0 = Integer.MIN_VALUE;
+        int majorityElement1 = Integer.MIN_VALUE;
+        int cnt0=0;
+        int cnt1=0;
+        for(int i=0; i<nums.length; i++){
+            if(cnt0==0 && nums[i]!= majorityElement1){
+                majorityElement0=nums[i];
+                cnt0++;
+            }
+            else if(cnt1 == 0 && nums[i] != majorityElement0){
+                majorityElement1 = nums[i];
+                cnt1++;
+            }
+            else if(nums[i] ==  majorityElement0){
+                cnt0++;
+            }
+            else if(nums[i] == majorityElement1){
+                cnt1++;
+            }else{
+                cnt0--;
+                cnt1--;
+            }
+        }
+        cnt0=0;
+        cnt1=0;
+        for(int i=0; i<nums.length; i++){
+            if(nums[i] == majorityElement0) cnt0++;
+            if(nums[i] == majorityElement1) cnt1++;
+        }
+        List<Integer> res = new ArrayList<>();
+        if(cnt0 > (n/3)) res.add(majorityElement0);
+        if(cnt1 > (n/3)) res.add(majorityElement1);
+        return res;
+    }
+}
