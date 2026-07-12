@@ -1,0 +1,47 @@
+class Solution {
+    List<Integer> succPredBST(TreeNode root, int key) {
+
+        List<Integer> result = new ArrayList<>();
+
+        result.add(inorderPredeccesor(root, key));
+        result.add(inorderSucessor(root, key));
+
+        return result;
+    }
+
+    private int inorderSucessor(TreeNode node, int key) {
+
+        TreeNode successor = null;
+        TreeNode curr = node;
+
+        while(curr != null) {
+
+            if(key >= curr.data) {
+                curr = curr.right;
+            }else {
+                successor = curr;
+                curr = curr.left;
+            }
+        }
+
+        return successor == null ? -1 : successor.data;
+    }
+
+    private int inorderPredeccesor(TreeNode node, int key) {
+
+        TreeNode predecessor = null;
+        TreeNode curr = node;
+
+        while(curr != null) {
+
+            if(key > curr.data) {
+                predecessor = curr;
+                curr = curr.right;
+            }else {
+                curr = curr.left;
+            }
+        }
+
+        return predecessor == null ? -1 : predecessor.data;
+    }
+}
