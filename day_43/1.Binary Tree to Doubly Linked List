@@ -1,0 +1,28 @@
+class Solution {
+
+    TreeNode head = null;
+    TreeNode prev = null;
+
+    TreeNode bToDLL(TreeNode root) {
+        inorder(root);
+        return head;
+    }
+
+    void inorder(TreeNode root) {
+        if (root == null)
+            return;
+
+        inorder(root.left);
+
+        if (prev == null) {
+            head = root;        // First node in inorder
+        } else {
+            prev.right = root;  // Link previous to current
+            root.left = prev;   // Link current to previous
+        }
+
+        prev = root;
+
+        inorder(root.right);
+    }
+}
