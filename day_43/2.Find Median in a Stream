@@ -1,0 +1,37 @@
+import java.util.*;
+
+class Solution {
+    public List<Double> getMedian(int[] arr) {
+
+        PriorityQueue<Integer> left = new PriorityQueue<>(Collections.reverseOrder()); // Max Heap
+        PriorityQueue<Integer> right = new PriorityQueue<>(); // Min Heap
+
+        List<Double> ans = new ArrayList<>();
+
+        for (int num : arr) {
+
+            // Insert into correct heap
+            if (left.isEmpty() || num <= left.peek()) {
+                left.offer(num);
+            } else {
+                right.offer(num);
+            }
+
+            // Rebalance heaps
+            if (left.size() > right.size() + 1) {
+                right.offer(left.poll());
+            } else if (right.size() > left.size()) {
+                left.offer(right.poll());
+            }
+
+            // Find median
+            if (left.size() == right.size()) {
+                ans.add((left.peek() + right.peek()) / 2.0);
+            } else {
+                ans.add((double) left.peek());
+            }
+        }
+
+        return ans;
+    }
+}
