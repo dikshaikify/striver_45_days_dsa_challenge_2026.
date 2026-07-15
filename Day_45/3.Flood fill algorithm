@@ -1,0 +1,30 @@
+class Solution {
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        int initialColor = image[sr][sc];
+        
+        // If the starting pixel already has the new color, no changes are needed
+        if (initialColor != newColor) {
+            dfs(image, sr, sc, initialColor, newColor);
+        }
+        
+        return image;
+    }
+    
+    private void dfs(int[][] image, int row, int col, int initialColor, int newColor) {
+        // Base case: check boundary conditions and matching initial color
+        if (row < 0 || row >= image.length || 
+            col < 0 || col >= image[0].length || 
+            image[row][col] != initialColor) {
+            return;
+        }
+        
+        // Update the current pixel color
+        image[row][col] = newColor;
+        
+        // Traverse 4-directionally (Up, Down, Left, Right)
+        dfs(image, row - 1, col, initialColor, newColor); // Up
+        dfs(image, row + 1, col, initialColor, newColor); // Down
+        dfs(image, row, col - 1, initialColor, newColor); // Left
+        dfs(image, row, col + 1, initialColor, newColor); // Right
+    }
+}
