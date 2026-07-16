@@ -1,0 +1,77 @@
+import java.util.*;
+
+class Solution {
+
+    public List<Integer> dfsOfGraph(int V, List<List<Integer>> edges) {
+
+        List<List<Integer>> adj = new ArrayList<>();
+
+        for (int i = 0; i < V; i++)
+            adj.add(new ArrayList<>());
+
+        for (List<Integer> edge : edges) {
+            int u = edge.get(0);
+            int v = edge.get(1);
+
+            adj.get(u).add(v);
+            adj.get(v).add(u);
+        }
+
+        boolean[] vis = new boolean[V];
+        List<Integer> ans = new ArrayList<>();
+
+        dfs(0, adj, vis, ans);
+
+        return ans;
+    }
+
+    private void dfs(int node, List<List<Integer>> adj, boolean[] vis, List<Integer> ans) {
+
+        vis[node] = true;
+        ans.add(node);
+
+        for (int nei : adj.get(node)) {
+            if (!vis[nei]) {
+                dfs(nei, adj, vis, ans);
+            }
+        }
+    }
+
+    public List<Integer> bfsOfGraph(int V, List<List<Integer>> edges) {
+
+        List<List<Integer>> adj = new ArrayList<>();
+
+        for (int i = 0; i < V; i++)
+            adj.add(new ArrayList<>());
+
+        for (List<Integer> edge : edges) {
+            int u = edge.get(0);
+            int v = edge.get(1);
+
+            adj.get(u).add(v);
+            adj.get(v).add(u);
+        }
+
+        boolean[] vis = new boolean[V];
+        Queue<Integer> q = new LinkedList<>();
+        List<Integer> ans = new ArrayList<>();
+
+        q.offer(0);
+        vis[0] = true;
+
+        while (!q.isEmpty()) {
+
+            int node = q.poll();
+            ans.add(node);
+
+            for (int nei : adj.get(node)) {
+                if (!vis[nei]) {
+                    vis[nei] = true;
+                    q.offer(nei);
+                }
+            }
+        }
+
+        return ans;
+    }
+}
